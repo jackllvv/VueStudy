@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>样式</title>
+    <script src="../vue.js"></script>
+    <style>
+        .active {
+            color: red;
+        }
+        .my-style{
+            font-size: 30px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <!--class绑定，这里类似 classNames-->
+    <div id="app-1" :class="{active : isActive,'my-style':hasError}" class="original-class">1111111123</div>
+    <script>
+        var vm = new Vue({
+            el : '#app-1',
+            data : {
+                isActive : false,
+                hasError : true
+            }
+        });
+    </script>
+
+    <!--可以用函数-->
+    <div id="app-2" :class="getClass()" class="original-class">2222222</div>
+    <script>
+        var vm2 = new Vue({
+            el : '#app-2',
+            data : {
+                isActive : false,
+                hasError : true
+            },
+            methods : {
+                getClass : function () {
+                    return {active : this.isActive,'my-style' : this.hasError};
+                }
+            }
+        });
+    </script>
+
+    <div id="app-3" :class="[active]">
+        3333333333333
+    </div>
+    <script>
+        var vm3 = new Vue({
+            el : '#app-3',
+            data : {
+                active : 'active'
+            }
+        });
+    </script>
+
+    <!--组件样式-->
+    <script>
+        Vue.component('test-component',{
+            template : '<p>444444444</p>'
+        });
+    </script>
+
+    <test-component :class="{active : isActive,'my-style':hasError}" id="app-4"></test-component>
+    <script>
+        var vm4 = new Vue({
+            el : '#app-4',
+            data : {
+                isActive : false,
+                hasError : true
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <!--条件渲染-->
+    <div id="app-1">
+        <h1 v-if="yes">yes</h1>
+        <h1 v-else>no</h1>
+    </div>
+    <script>
+        var vm = new Vue({
+            el : '#app-1',
+            data : {
+                yes : false
+            }
+        });
+    </script>
+
+    <!--测试2-->
+    <div id="app-2">
+        <h1 v-if="Math.random() > 0.5"> now you see me</h1>
+        <h1 v-else>now you don't</h1>
+    </div>
+    <script>
+        var vm2 = new Vue({
+            el : '#app-2'
+        });
+    </script>
+
+    <!--v-show-->
+    <div id="app-3">
+        <h1 v-show="true">111</h1>
+    </div>
+    <script>
+        var vm3 = new Vue({
+            el : '#app-3'
+        });
+    </script>
+
+    <!--列表渲染:数组-->
+    <div id="app-4">
+        <ul>
+            <li v-for="(o,index) in list">
+                {{o.name}} : {{index}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        var vm4 = new Vue({
+            el : '#app-4',
+            data : {
+                list : [{id : 1, name : 'aaa'},
+                    {id : 2, name : 'bbb'}]
+            }
+        });
+    </script>
+
+    <!--列表渲染:对象-->
+    <div id="app-5">
+        <ul>
+            <li v-for="(value,key,index) in list2" :key="index">
+                key:{{key}},value:{{value}},index:{{index}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        var vm4 = new Vue({
+            el : '#app-5',
+            data : {
+                list2 : {
+                    id : 1,
+                    name : 'aaaaa'
+                }
+            }
+        });
+    </script>
+
+    <!--显示过滤排序结果-->
+    <div id="app-6">
+        <ul>
+            <li v-for="n in evenNumbers()">{{n}}</li>
+        </ul>
+    </div>
+    <script>
+        var vm6 = new Vue({
+            el : '#app-6',
+            data : {
+                numbers : [1, 2, 3, 4, 5, 6]
+            },
+            methods : {
+                evenNumbers : function () {
+                    return this.numbers.filter(function (number) {
+                       return number%2 === 0;
+                    });
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <!--基本输入框-->
+    <div id="app-1">
+        <input type="text" v-model="msg">
+        <p>{{msg}}</p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el : '#app-1',
+            data : {
+                msg : '11111'
+            }
+        });
+    </script>
+
+    <!--复选框-->
+    <div id="app-2">
+        <input type="checkbox" v-model="checked">
+        <p>{{checked}}</p>
+
+        <!--多个复选框-->
+        <input type="checkbox" value="one" v-model="checkNames">
+        <input type="checkbox" value="two" v-model="checkNames">
+        <input type="checkbox" value="three" v-model="checkNames">
+        <input type="checkbox" value="four" v-model="checkNames">
+        <p>checkNames : {{checkNames}}</p>
+
+    </div>
+    <script>
+        var vm2 = new Vue({
+            el : '#app-2',
+            data : {
+                checked : true,
+                checkNames : []
+            }
+        });
+    </script>
+
+    <!--单选框-->
+    <div id="app-3">
+        <input type="radio" id="one" value="one" v-model="checked">
+        <input type="radio" id="two" value="two" v-model="checked">
+        <p>{{checked}}</p>
+    </div>
+    <script>
+        new Vue({
+            el : '#app-3',
+            data : {
+                checked : ''
+            }
+        });
+    </script>
+
+    <!--选择列表-->
+    <div id="app-4">
+
+        <!--单选列表-->
+        <select v-model="selected">
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+            <option>D</option>
+        </select>
+        <p>selected : {{selected}}</p>
+
+        <!--多选列表-->
+        <select v-model="mutSelect" multiple>
+            <option disabled value="">请选择</option>
+            <option value="1">A</option>
+            <option value="2">B</option>
+            <option value="3">C</option>
+            <option value="4">D</option>
+        </select>
+        <p>mutSelect : {{mutSelect}}</p>
+    </div>
+    <script>
+        new Vue({
+            el : '#app-4',
+            data : {
+                selected : '',
+                mutSelect : []
+            }
+        });
+    </script>
+
+    <!--修饰符-->
+    <div id="app-5">
+        <!--
+            .lazy
+            在默认情况下，v-model 在 input 事件中同步输入框的值与数据 (除了 上述 IME 部分)，但你可以添加一个修饰符 lazy ，从而转变为在 change 事件中同步：
+        -->
+        <input>
+    </div>
+
+</body>
+</html>

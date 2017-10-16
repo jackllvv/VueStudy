@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <!--事件helloWorld-->
+    <button @click="greet" id="app-1">greet</button>
+    <script>
+        var vm = new Vue({
+            el : '#app-1',
+            data : {
+                name : 'zs'
+            },
+            methods : {
+                greet : function (event) {
+                    alert('hello ' + this.name );
+                    if(event) {
+                        alert(event.target.tagName);
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!--事件修饰符-->
+    <!--.stop
+        .prevent
+        .capture
+        .self
+        .once-->
+
+    <div id="app-2">
+        <!--stop 组织事件冒泡-->
+        <div @click="click2">
+            <div @click.stop="click1">1111</div>
+        </div>
+
+        <!--.prevent阻止事件默认行为-->
+        <a href="http://www.baidu.com" @click.prevent="click3" target="_blank">333333</a>
+
+        <!--修饰符串联-->
+        <div @click="click2">
+            <a @click.stop.prevent="click1" href="http://www.baidu.com" target="_blank">1111</a>
+        </div>
+
+        <!--stop 捕获模式 从外向里-->
+        <div @click.capture="click2">
+            <div @click="click1">1111</div>
+        </div>
+    </div>
+
+    <script>
+        var vm2 = new Vue({
+            el : '#app-2',
+            methods : {
+                click1 : function () {
+                    alert('内部点击');
+                },
+                click2 : function () {
+                    alert('外部点击');
+                },
+                click3 : function () {
+                    alert('链接被点击');
+                }
+            }
+        });
+    </script>
+
+    <!--键盘事件-->
+    <input id="app-3" @keyup.enter="click4">
+    </input>
+    <script>
+        var vm3 = new Vue({
+            el : '#app-3',
+            methods : {
+                click4 : function () {
+                    alert('按下了回车键');
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
