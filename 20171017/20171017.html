@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件学习</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+
+    <!--组件-->
+    <div id="app1">
+        <my-component></my-component>
+    </div>
+
+    <script>
+        Vue.component('my-component',{
+            template : '<div>A custom component!</div>'
+        });
+
+        new Vue({
+            el : '#app1'
+        });
+    </script>
+
+    <!--局部组件-->
+    <div id="app2">
+        <my-component2></my-component2>
+    </div>
+    <script>
+        new Vue({
+            el : '#app2',
+            components : {
+                'my-component2' : {
+                    template : '<div>自定义局部组件</div>'
+                }
+            }
+        });
+    </script>
+
+    <!--简单计数器 data必须是函数-->
+    <div id="app3">
+        <my-button></my-button>
+        <my-button></my-button>
+        <my-button></my-button>
+    </div>
+
+    <script>
+        Vue.component('my-button',{
+            template : '<button @click="counter += 1">{{counter}}</button>',
+            data : function () {
+                return {
+                    counter : 0
+                }
+            }
+        });
+
+        new Vue({
+            el : '#app3'
+        });
+    </script>
+
+    <!--prop-->
+    <child id="app4" message="111111"></child>
+    <script>
+        Vue.component('child',{
+            props : ['message'],
+            template : '<span>{{message}}</span>'
+        });
+
+        new Vue({
+            el : '#app4'
+        });
+    </script>
+
+    <!--动态prop-->
+    <div id="app5">
+        <input v-model="parentMsg">
+        <br>
+        <my-child :my-message="parentMsg"></my-child>
+    </div>
+
+    <script>
+        Vue.component('my-child',{
+            props : ['myMessage'],
+            template : '<div>{{myMessage}}</div>'
+        });
+
+        new Vue({
+            el : '#app5',
+            data : {
+                parentMsg : ''
+            }
+        });
+    </script>
+
+
+    <!--prop验证-->
+    <div id="app6">
+        <validate :p1="1" :p2="2" :p3="3"></validate>
+    </div>
+    <script>
+        Vue.component('validate',{
+            props : {
+                p1 : Number,
+                p2 : [String,Number],
+                p3 : {
+                    validator : function (value) {
+                        console.log('prop3 必须大于10');
+                        return value > 10
+                    }
+                }
+            },
+            template : '<span>{{p1}},{{p2}},{{p3}}</span>'
+        });
+
+        new Vue({
+            el : 'validate'
+        });
+    </script>
+
+    <!--使用v-on绑定事件-->
+    <div id="app7">
+        <p>{{total}}</p>
+        <bc @increment="incrementTotal"></bc>
+    </div>
+
+    <script>
+        Vue.component('bc',{
+            data : function () {
+                return {
+                    counter : 0
+                }
+            },
+            template : '<button @click="incrementCounter">{{counter}}</button>',
+            methods : {
+                incrementCounter : function () {
+                    this.counter += 1;
+                    this.$emit('increment');
+                }
+            }
+        });
+
+        new Vue({
+           el : '#app7',
+           data : {
+               total : 0
+           },
+           methods : {
+               incrementTotal : function () {
+                   this.total += 1;
+               }
+           }
+        });
+    </script>
+
+
+
+    <!--插槽-->
+    <div id="app8">
+        <child2>
+            <solt></solt>
+        </child2>
+    </div>
+    <script>
+        Vue.component('child2',{
+            template : '<div><h1>这是子组件标题</h1><slot name="header"></slot><solt>只有在没有要分发的内容时才会显示。</solt></div>'
+        });
+        new Vue({
+            el : '#app8'
+        });
+    </script>
+
+    <div id="app9">
+        <child3>
+            <template slot-scope="props">
+                <span>{{props.text}}</span>
+            </template>
+        </child3>
+    </div>
+    <!--作用域插槽-->
+    <script>
+        Vue.component('child3',{
+            template : '<div><slot  text="hello from child"></slot></div>'
+        });
+        new Vue({
+            el : '#app9'
+        });
+    </script>
+
+    <!--动态组件-->
+    <div id="app10">
+        <div :is="dynView"></div>
+    </div>
+
+    <script>
+        new Vue({
+            el : '#app10',
+            data : {
+                dynView : 'shop'
+            },
+            components : {
+                home : {
+                    template : '<span>111111</span>'
+                },
+                shop : {
+                    template : '<span>222222</span>'
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
