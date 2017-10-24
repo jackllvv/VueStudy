@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue动画</title>
+    <script src="../vue.js"></script>
+    <style>
+        /*demo1*/
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+            opacity: 0
+        }
+        /*demo2*/
+        /* 可以设置不同的进入和离开动画 */
+        /* 设置持续时间和动画函数 */
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
+        .slide-fade-leave-active {
+            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+        .slide-fade-enter, .slide-fade-leave-to
+            /* .slide-fade-leave-active for below version 2.1.8 */ {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+
+        /*demo3*/
+        .test-enter {
+            width: 100px;
+            background-color: aquamarine;
+        }
+        .test-enter-active{
+            background-color: cornflowerblue;
+            transition: all 1s ease;
+        }
+        .test-enter-to {
+            width: 200px;
+        }
+        .test-leave {
+            width: 300px;
+
+        }
+        .test-leave-active {
+            transition: width 2s ease;
+        }
+        .test-leave-to {
+            width: 400px;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+    <!--动画helloworld-->
+    <div id="demo">
+        <button @click="show = !show">toggle</button>
+        <transition name="fade">
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+
+    <script>
+        new Vue({
+            el : '#demo',
+            data : {
+                show : false
+            }
+        });
+    </script>
+
+    <!--css过度动画-->
+    <div id="demo1">
+        <button @click="show = !show">
+            toggle enter
+        </button>
+        <transition name="slide-fade">
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+
+    <script>
+        console.log(111);
+        new Vue({
+            el : '#demo1',
+            data : {
+                show : true
+            }
+        });
+    </script>
+
+    <!--css动画所有-->
+    <div id="demo2">
+        <button @click="show = !show">
+            toggle
+        </button>
+        <transition name="test">
+            <p v-if="show">test</p>
+        </transition>
+    </div>
+
+    <script>
+        new Vue({
+            el : '#demo2',
+            data : {
+                show : true
+            }
+        });
+    </script>
+</body>
+</html>
